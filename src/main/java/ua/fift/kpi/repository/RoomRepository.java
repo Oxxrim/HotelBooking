@@ -8,4 +8,6 @@ import java.util.List;
 public interface RoomRepository extends CrudRepository<Room, Integer> {
 
     List<Room> findByCategory(String category);
+
+    Room findByNumber(int number);
 }

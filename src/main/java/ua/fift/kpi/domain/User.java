@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,6 +20,9 @@ public class User {
     private String username;
 
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private Set<Order> orders;
 
     public User(String username, String phoneNumber) {
         this.username = username;
