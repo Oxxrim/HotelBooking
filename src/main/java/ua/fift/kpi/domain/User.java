@@ -1,6 +1,5 @@
 package ua.fift.kpi.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,8 +20,8 @@ public class User {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<Order> orders;
+   /* @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private Set<Order> orders;*/
 
     public User(String username, String phoneNumber) {
         this.username = username;

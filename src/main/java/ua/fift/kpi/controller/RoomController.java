@@ -39,7 +39,6 @@ public class RoomController {
         Iterable<Order> orders = orderRepository.findAll();
 
         List<Room> unavailable = new ArrayList<>();
-        List<Room> available = new ArrayList<>();
 
         for (Order ordr : orders) {
             Date dateSince1 = sdf.parse(order.getSince());
@@ -47,29 +46,16 @@ public class RoomController {
             Date dateTo1 = sdf.parse(order.getTo());
             Date dateTo2 = sdf.parse(ordr.getTo());
 
-            System.out.println(dateSince1.after(dateSince2));
-            System.out.println(dateSince1.before(dateTo2));
-            System.out.println(dateTo1.after(dateSince2));
-            System.out.println(dateTo1.before(dateTo2));
-            if (dateSince1.after(dateSince2) && dateSince1.before(dateTo2)){
+            if (dateSince1.after(dateSince2) && dateSince1.before(dateTo2) || dateSince1.equals(dateSince2)){
                 unavailable.add(ordr.getRoom());
-            } else if (dateTo1.after(dateSince2) && dateTo1.before(dateTo2)){
+            } else if (dateTo1.after(dateSince2) && dateTo1.before(dateTo2) || dateTo1.equals(dateTo2)){
                 unavailable.add(ordr.getRoom());
             }
         }
 
-        System.out.println(unavailable.size());
-
-        System.out.println(rooms.size());
-
-
-            for (Room room : unavailable) {
-                rooms.remove(room);
-            }
-
-
-
-        System.out.println(available.size());
+        for (Room room : unavailable) {
+            rooms.remove(room);
+        }
 
         return rooms;
     }

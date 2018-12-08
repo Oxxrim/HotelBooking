@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -77,4 +78,13 @@ public class UserController {
     public int daysBetween(Date d1, Date d2){
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
+
+    @GetMapping("/bookings")
+    public List<Order> viewBooks(){
+        List<Order> usrBooks= orderRepository.findByClient(usr);
+
+        return usrBooks;
+    }
+
+
 }
