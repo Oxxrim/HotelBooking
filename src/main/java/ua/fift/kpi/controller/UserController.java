@@ -55,12 +55,14 @@ public class UserController {
 
         int days = daysBetween(since.getTime(), to.getTime());
         long totalPrice = room.getPrice() * days;
-
+        System.out.println(days + "\n" + totalPrice);
         if(order.isBreakfast()){
             totalPrice += room.getBreakfastCost() * days;
+            System.out.println(totalPrice);
         }
         if(order.isCleaning()){
             totalPrice += room.getBreakfastCost() * days;
+            System.out.println(totalPrice);
         }
 
         order.setTotalPrice(totalPrice);
