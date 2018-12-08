@@ -61,7 +61,7 @@ public class UserController {
             System.out.println(totalPrice);
         }
         if(order.isCleaning()){
-            totalPrice += room.getBreakfastCost() * days;
+            totalPrice += room.getCleaningCost() * days;
             System.out.println(totalPrice);
         }
 
