@@ -10,4 +10,5 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
 
     List<Order> findByClient(User user);
 
+    Order findByIdAndClient(int id, User user);
 }

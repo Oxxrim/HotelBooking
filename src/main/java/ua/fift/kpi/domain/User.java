@@ -20,9 +20,6 @@ public class User {
 
     private String phoneNumber;
 
-   /* @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<Order> orders;*/
-
     public User(String username, String phoneNumber) {
         this.username = username;
         this.phoneNumber = phoneNumber;

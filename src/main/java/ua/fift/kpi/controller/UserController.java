@@ -8,12 +8,9 @@ import ua.fift.kpi.domain.User;
 import ua.fift.kpi.repository.OrderRepository;
 import ua.fift.kpi.repository.RoomRepository;
 import ua.fift.kpi.repository.UserRepository;
+import ua.fift.kpi.service.ControllerService;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @RestController
@@ -42,48 +39,31 @@ public class UserController {
     @PostMapping("/book/{roomNumber}")
     public String bookTheRoom(@RequestBody Order order, @PathVariable int roomNumber) throws ParseException {
 
+        ControllerService service = new ControllerService();
+
         Room room = roomRepository.findByNumber(roomNumber);
 
-        Calendar since = new GregorianCalendar();
-        Calendar to = new GregorianCalendar();
+        if (service.checkForAvailable(order, orderRepository).contains(room)){
+            return "Sorry, but this room is not available";
+        } else {
+            order.setTotalPrice(service.countTheTotalPrice(order, room));
+            order.setRoom(room);
+            order.setClient(usr);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            orderRepository.save(order);
 
-        Date date = sdf.parse(order.getSince());
-        since.setTime(date);
-        date = sdf.parse(order.getTo());
-        to.setTime(date);
-
-        int days = daysBetween(since.getTime(), to.getTime());
-        long totalPrice = room.getPrice() * days;
-        System.out.println(days + "\n" + totalPrice);
-        if(order.isBreakfast()){
-            totalPrice += room.getBreakfastCost() * days;
-            System.out.println(totalPrice);
+            return "Your order has been accepted";
         }
-        if(order.isCleaning()){
-            totalPrice += room.getCleaningCost() * days;
-            System.out.println(totalPrice);
-        }
-
-        order.setTotalPrice(totalPrice);
-        order.setRoom(room);
-        order.setClient(usr);
-
-        orderRepository.save(order);
-
-        return "Your order has been accepted";
-    }
-
-    public int daysBetween(Date d1, Date d2){
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 
     @GetMapping("/bookings")
-    public List<Order> viewBooks(){
-        List<Order> usrBooks= orderRepository.findByClient(usr);
+    public List<Order> viewBookings(){
+        return orderRepository.findByClient(usr);
+    }
 
-        return usrBooks;
+    @GetMapping("/bookings/{bookId}")
+    public long viewTotalPrice(@PathVariable int bookId){
+        return orderRepository.findByIdAndClient(bookId, usr).getTotalPrice();
     }
 
 

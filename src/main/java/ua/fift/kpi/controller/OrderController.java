@@ -18,10 +18,7 @@ public class OrderController {
 
     @GetMapping("/bookings")
     public List<Order> viewAllBookings(){
-        List<Order> orders = (List<Order>) orderRepository.findAll();
 
-        System.out.println(orders.size());
-
-        return orders;
+        return (List<Order>) orderRepository.findAll();
     }
 }
