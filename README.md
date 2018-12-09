@@ -26,4 +26,13 @@ Requst body:
 })<br><br>
 5)User can view his bookings.(GET request "localhost:2020/user/bookings")<br><br>
 6)User can get the total price of the booking.(GET request "localhost:2020/user/bookings/{bookId}" for example "localhost:2020/user/bookings/258")<br><br>
-7)View all bookings for the hotel.(GET request "localhost:2020/hotel/bookings")
+7)View all bookings for the hotel.(GET request "localhost:2020/hotel/bookings")<br><br>
+8)User can delete his book(DELETE request "localhost:2020/user/book/{bookId}" for example "localhost:2020/user/book/290")<br><br>
+9)User can update his book(PUT request "localhost:2020/user/book/{bookId}/{roomNumber}" for example "localhost:2020/user/book/290/1" <br>
+Request body:
+{
+	"breakfast": true,
+	"cleaning": true,
+	"since": "27.12.2018", 
+	"to": "29.12.2018"
+})<br><br>
