@@ -33,7 +33,7 @@ public class RoomController {
 
         ControllerService service = new ControllerService();
 
-        List<Room> unavailable = service.checkForAvailable(order, orderRepository);
+        List<Room> unavailable = service.checkForUnavailable(order, orderRepository);
 
         for (Room room : unavailable) {
             rooms.remove(room);

@@ -43,7 +43,7 @@ public class UserController {
 
         Room room = roomRepository.findByNumber(roomNumber);
 
-        if (service.checkForAvailable(order, orderRepository).contains(room)){
+        if (service.checkForUnavailable(order, orderRepository).contains(room)){
             return "Sorry, but this room is not available";
         } else {
             order.setTotalPrice(service.countTheTotalPrice(order, room));

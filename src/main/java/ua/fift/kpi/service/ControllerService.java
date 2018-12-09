@@ -12,7 +12,7 @@ import java.util.*;
 public class ControllerService {
 
 
-    public List<Room> checkForAvailable(Order order, OrderRepository orderRepository) throws ParseException {
+    public List<Room> checkForUnavailable(Order order, OrderRepository orderRepository) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
         Iterable<Order> orders = orderRepository.findAll();
