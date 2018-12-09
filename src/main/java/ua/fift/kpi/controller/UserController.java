@@ -56,6 +56,32 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/book/{bookId}")
+    public String deleteTheBook(@PathVariable int bookId){
+        orderRepository.deleteById(bookId);
+        return "The book was deleted";
+    }
+
+    @PutMapping("/book/{bookId}/{roomNumber}")
+    public String updateTheBook(@RequestBody Order order, @PathVariable int bookId, @PathVariable int roomNumber) throws ParseException {
+        order.setId(bookId);
+        ControllerService service = new ControllerService();
+
+        Room room = roomRepository.findByNumber(roomNumber);
+
+        if (service.checkForUnavailable(order, orderRepository).contains(room)){
+            return "Sorry, but this room is not available";
+        } else {
+            order.setTotalPrice(service.countTheTotalPrice(order, room));
+            order.setRoom(room);
+            order.setClient(usr);
+
+            orderRepository.save(order);
+
+            return "Your book has been updated";
+        }
+    }
+
     @GetMapping("/bookings")
     public List<Order> viewBookings(){
         return orderRepository.findByClient(usr);
